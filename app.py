@@ -1272,7 +1272,7 @@ button:active {
 
 <p class="subtitle">
 
-    Adii, me dio pena pedir tu dirección para mandarte flores, y talvez no me hubieras contestado.
+    Adii, me dio pena pedir tu dirección para mandarte flores y probablemente hubiera sido una conversación muy sospechosa jajaja, asi que encontre otra manera.
 
 </p>
 
