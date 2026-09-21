@@ -680,6 +680,173 @@ button:hover{
 
 }
 
+/* =====================================
+   FLORECER AL ABRIR LA PÁGINA
+===================================== */
+
+.sunflower {
+    opacity: 0;
+    scale: 0;
+    transform-origin: 50% 70%;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Cada flor aparece en un momento diferente */
+
+.flower1 {
+    animation:
+        bloom 1.1s cubic-bezier(.2,.9,.3,1.3) .5s forwards,
+        flowerMovement 4s ease-in-out 1.6s infinite;
+}
+
+.flower2 {
+    animation:
+        bloom 1.1s cubic-bezier(.2,.9,.3,1.3) 1.1s forwards,
+        flowerMovement 4.3s ease-in-out 2.2s infinite;
+}
+
+.flower3 {
+    animation:
+        bloom 1.1s cubic-bezier(.2,.9,.3,1.3) 1.7s forwards,
+        flowerMovement 4.1s ease-in-out 2.8s infinite;
+}
+
+.flower4 {
+    animation:
+        bloom 1.1s cubic-bezier(.2,.9,.3,1.3) 2.3s forwards,
+        flowerMovement 4.5s ease-in-out 3.4s infinite;
+}
+
+.flower5 {
+    animation:
+        bloom 1.1s cubic-bezier(.2,.9,.3,1.3) 2.9s forwards,
+        flowerMovement 4.2s ease-in-out 4s infinite;
+}
+
+
+@keyframes bloom {
+
+    0% {
+        opacity: 0;
+        scale: 0;
+        rotate: -15deg;
+    }
+
+    60% {
+        opacity: 1;
+        scale: 1.12;
+        rotate: 4deg;
+    }
+
+    80% {
+        scale: .95;
+        rotate: -2deg;
+    }
+
+    100% {
+        opacity: 1;
+        scale: 1;
+        rotate: 0deg;
+    }
+}
+
+
+/* =====================================
+   ANIMACIÓN AL TOCAR UNA FLOR
+===================================== */
+
+.sunflower.clicked {
+
+    animation:
+        flowerClick .75s
+        cubic-bezier(.34,1.56,.64,1)
+        !important;
+
+}
+
+
+@keyframes flowerClick {
+
+    0% {
+        scale: 1;
+        rotate: 0deg;
+    }
+
+    20% {
+        scale: 1.12;
+        rotate: -8deg;
+    }
+
+    45% {
+        scale: 1.18;
+        rotate: 8deg;
+    }
+
+    70% {
+        scale: 1.08;
+        rotate: -4deg;
+    }
+
+    100% {
+        scale: 1;
+        rotate: 0deg;
+    }
+}
+
+
+/* Los pétalos reaccionan al click */
+
+.sunflower.clicked .petal {
+
+    animation:
+        petalDance .75s
+        ease-in-out;
+
+}
+
+
+@keyframes petalDance {
+
+    0% {
+        filter: brightness(1);
+    }
+
+    40% {
+        filter: brightness(1.2);
+    }
+
+    100% {
+        filter: brightness(1);
+    }
+
+}
+
+
+/* El centro también reacciona */
+
+.sunflower.clicked .flower-center {
+
+    animation:
+        centerPulse .75s
+        ease-in-out;
+
+}
+
+
+@keyframes centerPulse {
+
+    0%,100% {
+        scale: 1;
+    }
+
+    50% {
+        scale: 1.12;
+    }
+
+}
+
 </style>
 
 </head>
@@ -952,6 +1119,183 @@ function showMessage(){
         },
         100
     );
+
+}
+
+/* =====================================
+   INTERACCIÓN CON LOS GIRASOLES
+===================================== */
+
+const flowers =
+document.querySelectorAll(".sunflower");
+
+
+flowers.forEach(flower => {
+
+    flower.addEventListener("click", function() {
+
+        /*
+        Quitamos la animación anterior
+        para permitir hacer click varias veces
+        */
+
+        this.classList.remove("clicked");
+
+        void this.offsetWidth;
+
+        this.classList.add("clicked");
+
+
+        /*
+        Crear pequeños pétalos al tocar
+        la flor
+        */
+
+        createFlowerPetals(this);
+
+
+        /*
+        Al terminar vuelve a su
+        movimiento normal
+        */
+
+        setTimeout(() => {
+
+            this.classList.remove("clicked");
+
+        }, 750);
+
+    });
+
+});
+
+
+/* =====================================
+   MINI EXPLOSIÓN DE PÉTALOS
+===================================== */
+
+function createFlowerPetals(flower) {
+
+    const rect =
+    flower.getBoundingClientRect();
+
+
+    const centerX =
+    rect.left +
+    rect.width / 2;
+
+
+    const centerY =
+    rect.top +
+    rect.height / 2;
+
+
+    for(let i = 0; i < 7; i++) {
+
+        const petal =
+        document.createElement("div");
+
+
+        petal.style.position =
+        "fixed";
+
+
+        petal.style.left =
+        centerX + "px";
+
+
+        petal.style.top =
+        centerY + "px";
+
+
+        petal.style.width =
+        "9px";
+
+
+        petal.style.height =
+        "15px";
+
+
+        petal.style.background =
+        "#ffd52c";
+
+
+        petal.style.borderRadius =
+        "100% 0 100% 0";
+
+
+        petal.style.pointerEvents =
+        "none";
+
+
+        petal.style.zIndex =
+        "100";
+
+
+        document.body.appendChild(petal);
+
+
+        const angle =
+        Math.random() *
+        Math.PI * 2;
+
+
+        const distance =
+        35 +
+        Math.random() * 55;
+
+
+        const x =
+        Math.cos(angle) *
+        distance;
+
+
+        const y =
+        Math.sin(angle) *
+        distance;
+
+
+        petal.animate(
+
+            [
+
+                {
+                    transform:
+                    "translate(0,0) rotate(0deg)",
+
+                    opacity:1
+                },
+
+                {
+                    transform:
+                    `translate(${x}px, ${y}px) rotate(360deg)`,
+
+                    opacity:0
+                }
+
+            ],
+
+            {
+
+                duration:
+                600 +
+                Math.random() * 400,
+
+                easing:
+                "ease-out"
+
+            }
+
+        );
+
+
+        setTimeout(() => {
+
+            petal.remove();
+
+        }, 1100);
+
+    }
 
 }
 
