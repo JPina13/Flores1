@@ -191,7 +191,7 @@ HTML = r"""
 
         <p>Hechas con mucho cariño 🌻</p>
         <button class="ribbon" onclick="showMessage()">Tengo algo que decirte</button>
-        <p id="message">Gracias por existir y por hacer mis días más bonitos. 💛</p>
+        <p id="message">Gracias por existir. 💛</p>
     </main>
 
     <script>
